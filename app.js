@@ -60,6 +60,16 @@ function configurarApariencia() {
   );
 }
 
+  // Actualizar el color de la barra del navegador
+  const metaColor = document.querySelector(
+    'meta[name="theme-color"]'
+  );
+
+  if (metaColor) {
+    metaColor.content = CONFIG.apariencia.colorPrincipal;
+  }
+
+
 // CONFIGURAR NEGOCIO
 
 function configurarNegocio() {
