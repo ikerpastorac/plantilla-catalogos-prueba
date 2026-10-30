@@ -569,8 +569,8 @@ function enviarPedidoWhatsApp() {
 }
 
 enviarWhatsApp.addEventListener("click", enviarPedidoWhatsApp);
+
 // INICIAR
 
 configurarNegocio();
-mostrarCarrito();
 cargarProductos();
