@@ -27,7 +27,7 @@ const CONFIG = {
   // Configuración de moneda
   moneda: {
     codigo: "NIO",
-    simbolo: "$",
+    simbolo: "C$",
     locale: "es-NI",
     decimales: 2
   },
