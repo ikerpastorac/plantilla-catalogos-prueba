@@ -13,6 +13,11 @@ let productos = [];
 let carrito = [];
 let categoriaSeleccionada = "TODAS";
 
+// CLAVE EXCLUSIVA PARA CADA NEGOCIO
+
+const CLAVE_CARRITO =
+  `catalogo_carrito_${CONFIG.negocio.id}`;
+
 // CONFIGURAR NEGOCIO
 
 function configurarNegocio() {
@@ -92,8 +97,10 @@ async function cargarProductos() {
     estadoConexion.textContent =
       `${productos.length} productos disponibles en el catálogo`;
 
-    crearCategorias();
-    mostrarProductos();
+  crearCategorias();
+  cargarCarritoGuardado();
+  mostrarProductos();
+  mostrarCarrito();
 
   } catch (error) {
     console.error(error);
@@ -274,6 +281,65 @@ listaCategorias.addEventListener("click", evento => {
 
 buscarProducto.addEventListener("input", mostrarProductos);
 
+// GUARDAR CARRITO EN EL DISPOSITIVO
+
+function guardarCarrito() {
+  try {
+    const datos = carrito.map(item => ({
+      codigo: item.producto.CODIGO,
+      cantidad: item.cantidad
+    }));
+
+    localStorage.setItem(
+      CLAVE_CARRITO,
+      JSON.stringify(datos)
+    );
+
+  } catch (error) {
+    console.warn("No se pudo guardar el carrito:", error);
+  }
+}
+
+// RECUPERAR CARRITO DEL DISPOSITIVO
+
+function cargarCarritoGuardado() {
+  try {
+    const datosGuardados =
+      JSON.parse(localStorage.getItem(CLAVE_CARRITO) || "[]");
+
+    if (!Array.isArray(datosGuardados)) {
+      carrito = [];
+      return;
+    }
+
+    carrito = datosGuardados
+      .map(item => {
+        const producto = productos.find(producto =>
+          producto.CODIGO === item.codigo
+        );
+
+        const cantidad = Number(item.cantidad);
+
+        if (
+          !producto ||
+          !Number.isInteger(cantidad) ||
+          cantidad < 1
+        ) {
+          return null;
+        }
+
+        return {
+          producto: producto,
+          cantidad: cantidad
+        };
+      })
+      .filter(Boolean);
+
+  } catch (error) {
+    console.warn("No se pudo recuperar el carrito:", error);
+    carrito = [];
+  }
+}
 // AGREGAR PRODUCTOS AL CARRITO
 
 contenedorProductos.addEventListener("click", evento => {
@@ -312,6 +378,7 @@ function agregarAlCarrito(producto) {
 // MOSTRAR CARRITO
 
 function mostrarCarrito() {
+  guardarCarrito();
   listaCarrito.innerHTML = "";
 
   const totalUnidades = carrito.reduce(
