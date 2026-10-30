@@ -95,11 +95,19 @@ function obtenerPrecio(producto) {
 }
 
 function formatearPrecio(precio) {
-  return `${CONFIG.negocio.simboloMoneda} ${precio.toLocaleString("es-NI", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  })}`;
+  const moneda = CONFIG.moneda;
+
+  const numeroFormateado = new Intl.NumberFormat(
+    moneda.locale,
+    {
+      minimumFractionDigits: moneda.decimales,
+      maximumFractionDigits: moneda.decimales
+    }
+  ).format(Number(precio));
+
+  return `${moneda.simbolo} ${numeroFormateado}`;
 }
+
 
 // CONSULTAR BACKEND
 
