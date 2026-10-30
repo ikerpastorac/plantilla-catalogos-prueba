@@ -3,8 +3,8 @@ const CONFIG = {
   // Datos generales del negocio
   negocio: {
     id: "catalogo_prueba",
-    nombre: "Catálogo de prueba",
-    descripcion: "Descubre nuestros productos",
+    nombre: "Tienda Demostración",
+    descripcion: "los mejores productos a excelentes precios",
     logo: "",
     whatsapp: "50588644959",
 
