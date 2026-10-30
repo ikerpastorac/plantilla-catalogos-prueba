@@ -1,6 +1,6 @@
 const CONFIG = {
   negocio: {
-    id: "catalogo_prueba"
+    id: "catalogo_prueba",
     nombre: "Catálogo de prueba",
     descripcion: "Descubre nuestros productos",
     logo: "",
