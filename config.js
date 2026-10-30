@@ -8,9 +8,6 @@ const CONFIG = {
     logo: "",
     whatsapp: "50588644959",
 
-    // Se conserva temporalmente para compatibilidad
-    // con la versión actual de app.js
-    simboloMoneda: "C$"
   },
 
   // Personalización visual
