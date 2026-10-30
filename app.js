@@ -78,24 +78,36 @@ async function cargarProductos() {
     if (!datos.ok) {
       throw new Error("Respuesta incorrecta del backend.");
     }
+  // PRODUCTOS PUBLICADOS
 
-    productos = datos.productos.filter(producto =>
-      producto.PUBLICO?.trim().toUpperCase() === "SI"
-    );
+const productosPublicados = datos.productos.filter(producto =>
+  producto.PUBLICO?.trim().toUpperCase() === "SI"
+);
 
-    if (!CONFIG.catalogo.mostrarProductosAgotados) {
-      productos = productos.filter(producto =>
-        producto.DISPONIBLE?.trim().toUpperCase() === "SI" &&
-        Number(producto.EXISTENCIA) > 0
-      );
-    }
+// PRODUCTOS REALMENTE DISPONIBLES
 
-    productos.sort((a, b) =>
-      Number(a.ORDEN || 999) - Number(b.ORDEN || 999)
-    );
+const productosDisponibles = productosPublicados.filter(producto =>
+  producto.DISPONIBLE?.trim().toUpperCase() === "SI" &&
+  Number(producto.EXISTENCIA) > 0
+);
 
-    estadoConexion.textContent =
-      `${productos.length} productos disponibles en el catálogo`;
+// DETERMINAR QUÉ PRODUCTOS MOSTRAR
+
+productos = CONFIG.catalogo.mostrarProductosAgotados
+  ? [...productosPublicados]
+  : [...productosDisponibles];
+
+// ORDENAR PRODUCTOS
+
+productos.sort((a, b) =>
+  Number(a.ORDEN || 999) - Number(b.ORDEN || 999)
+);
+
+// ACTUALIZAR CONTADOR
+
+estadoConexion.textContent =
+  `${productosPublicados.length} productos publicados · ${productosDisponibles.length} disponibles`;
+
 
   crearCategorias();
   cargarCarritoGuardado();
