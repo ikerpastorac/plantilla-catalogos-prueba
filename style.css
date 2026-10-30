@@ -640,3 +640,28 @@ body {
   font-size: 12px;
   white-space: nowrap;
 }
+/* BOTÓN DE WHATSAPP */
+
+.boton-whatsapp {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 13px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #168b55;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.boton-whatsapp:hover:not(:disabled) {
+  background: #116f43;
+}
+
+.boton-whatsapp:disabled {
+  background: #aeb6c2;
+  cursor: not-allowed;
+}
