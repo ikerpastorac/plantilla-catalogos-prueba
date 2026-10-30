@@ -2,7 +2,7 @@
 const CONFIG = {
   // Datos generales del negocio
   negocio: {
-    id: "catalogo_prueba",
+    id: "tienda_a",
     nombre: "Catálogo de Prueba",
     descripcion: "Descubre nuestros productos",
     logo: "",
