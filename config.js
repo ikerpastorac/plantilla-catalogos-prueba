@@ -15,8 +15,8 @@ const CONFIG = {
 
   // Personalización visual
   apariencia: {
-    colorPrincipal: "#172B4D",
-    colorSecundario: "#426B9A",
+    colorPrincipal: "#8B0000",
+    colorSecundario: "#C0392B",
     colorFondo: "#F7F8FA",
     colorTarjetas: "#FFFFFF",
     colorTexto: "#202B3C",
