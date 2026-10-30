@@ -5,7 +5,7 @@ const CONFIG = {
     id: "catalogo_prueba",
     nombre: "Catálogo de Prueba",
     descripcion: "Descubre nuestros productos",
-    logo: "https://plantilla-catalogos-prueba.pages.dev/assets/camisa-prueba.png",
+    logo: "",
     whatsapp: "50588644959",
 
   },
