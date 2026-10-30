@@ -33,7 +33,7 @@ const CONFIG = {
   catalogo: {
     mostrarExistenciaExacta: false,
     mostrarProductosAgotados: true,
-    mostrarDestacados: true
+    mostrarDestacados: false
   },
 
   // Conexión con Google Apps Script
