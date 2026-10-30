@@ -7,6 +7,7 @@ const listaCarrito = document.getElementById("listaCarrito");
 const cantidadCarrito = document.getElementById("cantidadCarrito");
 const totalCarrito = document.getElementById("totalCarrito");
 const vaciarCarrito = document.getElementById("vaciarCarrito");
+const enviarWhatsApp = document.getElementById("enviarWhatsApp");
 
 let productos = [];
 let carrito = [];
@@ -330,6 +331,7 @@ function mostrarCarrito() {
   totalCarrito.textContent = formatearPrecio(total);
 
   vaciarCarrito.disabled = carrito.length === 0;
+  enviarWhatsApp.disabled = carrito.length === 0;
 
   if (carrito.length === 0) {
     listaCarrito.innerHTML = `
@@ -450,7 +452,56 @@ function mostrarMensaje(texto) {
 function ocultarMensaje() {
   mensajeEstado.classList.add("oculto");
 }
+// GENERAR PEDIDO POR WHATSAPP
 
+function enviarPedidoWhatsApp() {
+
+  if (carrito.length === 0) {
+    alert("El carrito está vacío.");
+    return;
+  }
+
+  const telefono = CONFIG.negocio.whatsapp
+    .replace(/\D/g, "");
+
+  if (!telefono) {
+    alert("Primero debes configurar el número de WhatsApp del negocio.");
+    return;
+  }
+
+  const total = carrito.reduce(
+    (suma, item) =>
+      suma + obtenerPrecio(item.producto) * item.cantidad,
+    0
+  );
+
+  let mensaje = `Hola, deseo realizar el siguiente pedido para ${CONFIG.negocio.nombre}:\n\n`;
+
+  carrito.forEach(item => {
+
+    const producto = item.producto;
+    const precio = obtenerPrecio(producto);
+    const subtotal = precio * item.cantidad;
+
+    mensaje += `*${producto.PRODUCTO}*\n`;
+    mensaje += `Cantidad: ${item.cantidad}\n`;
+    mensaje += `Precio unitario: ${formatearPrecio(precio)}\n`;
+    mensaje += `Subtotal: ${formatearPrecio(subtotal)}\n\n`;
+
+  });
+
+  mensaje += `*TOTAL DEL PEDIDO: ${formatearPrecio(total)}*\n\n`;
+
+  mensaje += "Por favor, confirmen la disponibilidad de los productos y las cantidades solicitadas.\n\n";
+
+  mensaje += "Gracias.";
+
+  const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+
+  window.open(url, "_blank");
+}
+
+enviarWhatsApp.addEventListener("click", enviarPedidoWhatsApp);
 // INICIAR
 
 configurarNegocio();
