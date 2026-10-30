@@ -74,7 +74,46 @@
       <div id="contenedorProductos" class="productos-grid"></div>
 
     </section>
+        <!-- CARRITO DE COMPRAS -->
 
+    <section class="seccion-carrito" id="seccionCarrito">
+
+      <div class="titulo-seccion">
+        <div>
+          <h2>Mi carrito</h2>
+          <p id="cantidadCarrito">0 productos seleccionados</p>
+        </div>
+      </div>
+
+      <div class="carrito-contenido">
+
+        <div id="listaCarrito" class="lista-carrito">
+          <p class="carrito-vacio">
+            Todavía no has agregado productos.
+          </p>
+        </div>
+
+        <div class="carrito-resumen">
+
+          <div class="carrito-total">
+            <span>Total</span>
+            <strong id="totalCarrito">C$ 0.00</strong>
+          </div>
+
+          <button
+            type="button"
+            id="vaciarCarrito"
+            class="boton-vaciar"
+            disabled
+          >
+            Vaciar carrito
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
   </main>
 
   <footer class="pie">
