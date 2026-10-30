@@ -18,6 +18,48 @@ let categoriaSeleccionada = "TODAS";
 const CLAVE_CARRITO =
   `catalogo_carrito_${CONFIG.negocio.id}`;
 
+
+
+function configurarApariencia() {
+  const apariencia = CONFIG.apariencia;
+  const raiz = document.documentElement;
+
+  raiz.style.setProperty(
+    "--color-principal",
+    apariencia.colorPrincipal
+  );
+
+  raiz.style.setProperty(
+    "--color-secundario",
+    apariencia.colorSecundario
+  );
+
+  raiz.style.setProperty(
+    "--color-fondo",
+    apariencia.colorFondo
+  );
+
+  raiz.style.setProperty(
+    "--color-tarjetas",
+    apariencia.colorTarjetas
+  );
+
+  raiz.style.setProperty(
+    "--color-texto",
+    apariencia.colorTexto
+  );
+
+  raiz.style.setProperty(
+    "--color-texto-secundario",
+    apariencia.colorTextoSecundario
+  );
+
+  raiz.style.setProperty(
+    "--color-borde",
+    apariencia.colorBorde
+  );
+}
+
 // CONFIGURAR NEGOCIO
 
 function configurarNegocio() {
@@ -583,6 +625,6 @@ function enviarPedidoWhatsApp() {
 enviarWhatsApp.addEventListener("click", enviarPedidoWhatsApp);
 
 // INICIAR
-
+configurarApariencia();
 configurarNegocio();
 cargarProductos();
