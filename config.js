@@ -3,7 +3,7 @@ const CONFIG = {
     nombre: "Catálogo de prueba",
     descripcion: "Descubre nuestros productos",
     logo: "",
-    whatsapp: "",
+    whatsapp: "50588644959",
     moneda: "NIO",
     simboloMoneda: "C$"
   },
