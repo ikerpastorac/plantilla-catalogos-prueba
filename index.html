@@ -1,38 +1,88 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Prueba de conexión — Catálogo</title>
-<style>
-:root{color-scheme:light;--ink:#202733;--muted:#64748b;--line:#dce3ea;--paper:#f5f7fa;--accent:#2356a8}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--paper);color:var(--ink)}
-main{max-width:850px;margin:0 auto;padding:24px 16px 48px}header{padding:24px;border-radius:18px;background:#172b4d;color:white}
-h1{margin:0 0 8px;font-size:clamp(1.5rem,4vw,2rem)}p{line-height:1.55}.muted{color:var(--muted)}header .muted{color:#d5dfef}
-.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;margin-top:16px}
-button{border:0;border-radius:10px;background:var(--accent);color:white;font-weight:650;padding:12px 16px;cursor:pointer}button:disabled{opacity:.55;cursor:wait}
-.status{padding:12px 14px;border-radius:10px;background:#eef2f7;margin-top:14px;overflow-wrap:anywhere}.status.ok{background:#e8f7ed;color:#176534}.status.err{background:#fff0ee;color:#922b21}
-.product{border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:12px}.product h3{margin:0 0 8px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
-.field{background:#f7f9fc;border-radius:8px;padding:10px;overflow-wrap:anywhere}.field strong{display:block;font-size:.78rem;color:var(--muted);margin-bottom:4px}
-code{overflow-wrap:anywhere}details{margin-top:14px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#111827;color:#e5edf8;padding:14px;border-radius:10px;font-size:.82rem}
-footer{margin-top:18px;font-size:.9rem;color:var(--muted)}
-</style></head>
-<body><main>
-<header><h1>Prueba de conexión del catálogo</h1><p class="muted">Página de diagnóstico para comprobar si una web independiente puede consultar el backend de Google Apps Script.</p></header>
-<section class="panel"><h2>1. Consultar el backend</h2><p>Esta prueba utiliza la URL de la implementación de Apps Script del catálogo de prueba.</p><button id="testButton" type="button">Probar conexión</button><div id="status" class="status" role="status" aria-live="polite">Pulsa “Probar conexión” para iniciar la prueba.</div></section>
-<section class="panel"><h2>2. Productos recibidos</h2><div id="products"><p class="muted">Todavía no se han recibido datos.</p></div><details><summary>Ver respuesta recibida</summary><pre id="raw">Sin respuesta todavía.</pre></details></section>
-<section class="panel"><h2>Si la prueba falla</h2><ul>
-<li>Comprueba que la implementación de Apps Script esté activa y que su URL sea la correcta.</li>
-<li>Si la implementación permite acceso únicamente a tu cuenta, una página pública no podrá consultarla sin iniciar sesión.</li>
-<li>El navegador puede bloquear la solicitud por CORS (una restricción de seguridad entre sitios). Si ocurre, no significa necesariamente que Apps Script esté averiado; ajustaremos el método de conexión.</li>
-<li>Usa solamente datos ficticios en esta prueba. No publiques información privada ni credenciales.</li>
-</ul></section><footer>Archivo de prueba. No modifica Google Sheets ni Apps Script y no envía pedidos.</footer>
-</main>
-<script>
-const BACKEND_URL="https://script.google.com/macros/s/AKfycbwhLfvlKbKWaVYVTbPDX7bXBsOioPvSHZRbWI4HwtH5RwsGwZ-DX51TG8X_e5LEPFPq/exec";
-const button=document.getElementById("testButton"),statusBox=document.getElementById("status"),productsBox=document.getElementById("products"),rawBox=document.getElementById("raw");
-function showStatus(message,type=""){statusBox.className="status"+(type?" "+type:"");statusBox.textContent=message}
-function field(label,value){const div=document.createElement("div");div.className="field";const strong=document.createElement("strong");strong.textContent=label;const span=document.createElement("span");span.textContent=value===undefined||value===null||value===""?"—":String(value);div.append(strong,span);return div}
-function renderProducts(data){productsBox.replaceChildren();if(!Array.isArray(data.productos)||data.productos.length===0){const p=document.createElement("p");p.className="muted";p.textContent="La conexión respondió correctamente, pero no hay productos en la lista.";productsBox.appendChild(p);return}data.productos.forEach(product=>{const article=document.createElement("article");article.className="product";const title=document.createElement("h3");title.textContent=product.PRODUCTO||"Producto sin nombre";const grid=document.createElement("div");grid.className="grid";grid.append(field("Código",product.CODIGO),field("Categoría",product.CATEGORIA),field("Precio",product.PRECIO?"C$ "+product.PRECIO:""),field("Existencia",product.EXISTENCIA),field("Disponibilidad",product.DISPONIBLE),field("Descripción",product.DESCRIPCION));article.append(title,grid);productsBox.appendChild(article)})}
-async function testBackend(){button.disabled=true;showStatus("Consultando el backend…");productsBox.replaceChildren();rawBox.textContent="Esperando respuesta…";try{const response=await fetch(BACKEND_URL,{method:"GET"});if(!response.ok)throw new Error("El servidor respondió con HTTP "+response.status);const data=await response.json();rawBox.textContent=JSON.stringify(data,null,2);if(!data||data.ok!==true||!Array.isArray(data.productos))throw new Error("La respuesta no tiene el formato JSON esperado.");showStatus("Conexión correcta. Productos recibidos: "+data.cantidad,"ok");renderProducts(data)}catch(error){const message=error&&error.message?error.message:String(error);showStatus("No se pudo leer la respuesta desde esta página. Error: "+message+" Si aparece un error CORS en la consola del navegador, revisaremos el método de conexión entre Cloudflare Pages y Apps Script.","err");rawBox.textContent=message;productsBox.textContent="No se pudieron mostrar los productos en esta prueba."}finally{button.disabled=false}}
-button.addEventListener("click",testBackend);
-</script></body></html>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Catálogo de prueba</title>
+
+  <meta name="description" content="Catálogo digital de productos">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="encabezado">
+    <div class="contenedor encabezado-interior">
+
+      <a href="#" class="marca">
+        <img id="logoNegocio" class="logo" alt="Logo del negocio">
+        <span id="nombreNegocio">Catálogo de prueba</span>
+      </a>
+
+      <div class="estado-conexion" id="estadoConexion">
+        Cargando catálogo...
+      </div>
+
+    </div>
+  </header>
+
+  <main class="contenedor">
+
+    <section class="presentacion">
+      <p class="etiqueta">CATÁLOGO DIGITAL</p>
+      <h1 id="tituloCatalogo">Nuestros productos</h1>
+      <p id="descripcionNegocio">
+        Descubre nuestros productos.
+      </p>
+    </section>
+
+    <section class="herramientas">
+
+      <div class="buscador">
+        <span>⌕</span>
+        <input
+          type="search"
+          id="buscarProducto"
+          placeholder="Buscar productos..."
+          autocomplete="off"
+        >
+      </div>
+
+      <div class="categorias" id="listaCategorias">
+        <button class="categoria activa" data-categoria="TODAS">
+          Todas
+        </button>
+      </div>
+
+    </section>
+
+    <section class="seccion-productos">
+
+      <div class="titulo-seccion">
+        <div>
+          <h2>Productos</h2>
+          <p id="cantidadProductos">Consultando productos...</p>
+        </div>
+      </div>
+
+      <div id="mensajeEstado" class="mensaje-estado">
+        Estamos cargando el catálogo...
+      </div>
+
+      <div id="contenedorProductos" class="productos-grid"></div>
+
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <p id="pieNegocio">Catálogo digital</p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
