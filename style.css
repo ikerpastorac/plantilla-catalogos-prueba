@@ -1,12 +1,18 @@
 :root {
-  --color-principal: #193153;
-  --color-secundario: #315d91;
-  --color-fondo: #f5f7fa;
-  --color-texto: #202b3c;
-  --color-gris: #687386;
-  --color-borde: #e2e7ee;
-  --color-blanco: #ffffff;
+  /* Colores principales del catálogo */
+  --color-principal: #172B4D;
+  --color-secundario: #426B9A;
+  --color-fondo: #F7F8FA;
+  --color-tarjetas: #FFFFFF;
+  --color-texto: #202B3C;
+  --color-texto-secundario: #687386;
+  --color-borde: #E2E7EE;
+
+  /* Compatibilidad con los estilos existentes */
+  --color-gris: var(--color-texto-secundario);
+  --color-blanco: var(--color-tarjetas);
 }
+
 
 * {
   box-sizing: border-box;
