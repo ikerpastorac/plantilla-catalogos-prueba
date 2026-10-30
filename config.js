@@ -31,7 +31,7 @@ const CONFIG = {
 
   // Opciones de visualización del catálogo
   catalogo: {
-    mostrarExistenciaExacta: true,
+    mostrarExistenciaExacta: false,
     mostrarProductosAgotados: true,
     mostrarDestacados: true
   },
